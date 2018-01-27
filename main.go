@@ -18,6 +18,12 @@ func main() {
 	channel := flag.String("channel", "random", "Text of the channel to be posted. Default value is random")
 	flag.Parse()
 
+	// Check message value
+	if *message == "" {
+		fmt.Println("Empty message text. Please try again.")
+		return
+	}
+
 	// Posting message
 	_, _, err := api.PostMessage("#"+*channel, *message, slack.PostMessageParameters{Username: "Notifier"})
 	if err != nil {

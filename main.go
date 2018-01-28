@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"github.com/nlopes/slack"
+	"os"
 )
 
 // slack token(This value setted at build as option -ldflag)
@@ -13,19 +15,29 @@ func main() {
 	// Init slack client
 	api := slack.New(token)
 
+	var message string
+
 	// Parse commandline args
-	message := flag.String("message", "", "Text to post to Slack")
+	argMessage := flag.String("message", "", "Text to post to Slack")
 	channel := flag.String("channel", "random", "Text of the channel to be posted. Default value is random")
 	flag.Parse()
 
 	// Check message value
-	if *message == "" {
-		fmt.Println("Empty message text. Please try again.")
-		return
+	if *argMessage == "" {
+		// If message text from arg is null, read from stdin
+		stdin := bufio.NewScanner(os.Stdin)
+		stdin.Scan()
+		message = stdin.Text()
+		if message == "" {
+			fmt.Println("Empty message text. Please try again.")
+			return
+		}
+	} else {
+		message = *argMessage
 	}
 
 	// Posting message
-	_, _, err := api.PostMessage("#"+*channel, *message, slack.PostMessageParameters{Username: "Notifier"})
+	_, _, err := api.PostMessage("#"+*channel, message, slack.PostMessageParameters{Username: "Notifier"})
 	if err != nil {
 		fmt.Println("Faild to post message")
 		fmt.Println(err)

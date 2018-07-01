@@ -12,7 +12,7 @@ $ SLACK_TOKEN=xxxxxxxxxxxxxxxxxxx make
 
 ## Usage
 ```
-$ notifier --message "text of posting message" --channel "text of channel name"
+$ notifier --message "text of posting message" --channel "text of channel name" --username "username_of_post_notification"
 ```
 
-`--message` option is required. `--channel` option is optional.
+`--message` option is required. `--channel` and `--username` option is optional.

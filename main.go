@@ -20,6 +20,7 @@ func main() {
 	// Parse commandline args
 	argMessage := flag.String("message", "", "Text to post to Slack")
 	channel := flag.String("channel", "random", "Text of the channel to be posted. Default value is random")
+	username := flag.String("username", "Notifier", "Text of UserName who post notification")
 	flag.Parse()
 
 	// Check message value
@@ -37,7 +38,7 @@ func main() {
 	}
 
 	// Posting message
-	_, _, err := api.PostMessage("#"+*channel, message, slack.PostMessageParameters{Username: "Notifier"})
+	_, _, err := api.PostMessage("#"+*channel, message, slack.PostMessageParameters{Username: *username})
 	if err != nil {
 		fmt.Println("Faild to post message")
 		fmt.Println(err)

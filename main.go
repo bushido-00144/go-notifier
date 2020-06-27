@@ -38,7 +38,7 @@ func main() {
 	}
 
 	// Posting message
-	_, _, err := api.PostMessage("#"+*channel, message, slack.PostMessageParameters{Username: *username})
+	_, _, err := api.PostMessage("#"+*channel, slack.MsgOptionText(message, false), slack.MsgOptionUsername(*username))
 	if err != nil {
 		fmt.Println("Faild to post message")
 		fmt.Println(err)

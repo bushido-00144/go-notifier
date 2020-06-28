@@ -13,6 +13,10 @@ var token string
 
 func main() {
 	// Init slack client
+    if token == "" {
+        fmt.Println("Empty token")
+        os.Exit(1)
+    }
 	api := slack.New(token)
 
 	var message string
@@ -38,7 +42,7 @@ func main() {
 	}
 
 	// Posting message
-	_, _, err := api.PostMessage("#"+*channel, message, slack.PostMessageParameters{Username: *username})
+	_, _, err := api.PostMessage("#"+*channel, slack.MsgOptionText(message, false), slack.MsgOptionUsername(*username))
 	if err != nil {
 		fmt.Println("Faild to post message")
 		fmt.Println(err)

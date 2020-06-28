@@ -13,6 +13,10 @@ var token string
 
 func main() {
 	// Init slack client
+    if token == "" {
+        fmt.Println("Empty token")
+        os.Exit(1)
+    }
 	api := slack.New(token)
 
 	var message string
